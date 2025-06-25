@@ -43,23 +43,47 @@ unset($item);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    body {
-      font-family: 'Outfit', sans-serif;
-      background-color: #f8f9fa;
-    }
-    .footer {
-      background: #212529;
-      color: #fff;
-      padding: 2rem 0;
-      text-align: center;
-      margin-top: 4rem;
-    }
-    img.product-img {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
+    /* Reset & base */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Outfit', sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container dyal content (flex grow to push footer down) */
+.container.my-5 {
+  flex: 1 0 auto;
+}
+
+/* Footer styling */
+.footer {
+  background: #212529;
+  color: #fff;
+  padding: 2rem 0;
+  text-align: center;
+  flex-shrink: 0;
+  margin-top: 4rem; /* keep spacing from content */
+}
+
+/* Product image */
+img.product-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Responsive tweaks if needed */
+@media (max-width: 576px) {
+  img.product-img {
+    width: 60px;
+    height: 60px;
+  }
+}
+
   </style>
 </head>
 <body>

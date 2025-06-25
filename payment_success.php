@@ -1,25 +1,22 @@
 <?php
-session_start();
-require_once 'db.php';
-
-if (!isset($_SESSION['userId'])) {
-    header('Location: login.php');
-    exit();
-}
-
-// Get the latest order by this user
-$stmt = $pdo->prepare("SELECT id FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 1");
-$stmt->execute([$_SESSION['userId']]);
-$order = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if ($order) {
-    // Update order status to success
-    $update = $pdo->prepare("UPDATE orders SET status = 'success' WHERE id = ?");
-    $update->execute([$order['id']]);
-
-    // Optional: clear cart session
-    unset($_SESSION['cart']);
-}
+  session_start();
+  require_once 'db.php';
+  
+  if (!isset($_SESSION['userId'])) {
+      header('Location: login.php');
+      exit();
+  }
+  
+  $stmt = $pdo->prepare("SELECT id FROM orders WHERE user_id = ? ORDER BY created_at DESC LIMIT 1");
+  $stmt->execute([$_SESSION['userId']]);
+  $order = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+  if ($order) {
+      $update = $pdo->prepare("UPDATE orders SET status = 'success' WHERE id = ?");
+      $update->execute([$order['id']]);
+  
+      unset($_SESSION['cart']);
+  }
 ?>
 
 <!DOCTYPE html>

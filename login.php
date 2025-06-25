@@ -42,14 +42,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
       font-family: 'Outfit', sans-serif;
       background-color: #f8f9fa;
     }
 
-    .navbar {
-      background-color: #fff;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    body {
+      flex: 1 0 auto;
     }
 
     .login-form {
@@ -59,6 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       padding: 2rem;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
     }
 
     .footer {
@@ -66,14 +70,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       color: #fff;
       padding: 2rem 0;
       text-align: center;
+      margin-top: auto;
+      flex-shrink: 0;
+      width: 100%;
     }
 
-    .forgot-link {
-      font-size: 0.9rem;
-      display: block;
-      margin-top: 0.5rem;
-      text-align: right;
-    }
   </style>
 </head>
 <body>

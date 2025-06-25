@@ -1,7 +1,7 @@
 <?php
-    $dsn = 'mysql:host=localhost;dbname=clothify;charset=utf8';
-    $username = 'root';
-    $password = '';
+    $dsn = 'mysql:host=your_host;dbname=your_db;charset=utf8';
+    $username = 'your_username';
+    $password = 'your_password';
     try {
         $pdo = new PDO($dsn, $username, $password);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

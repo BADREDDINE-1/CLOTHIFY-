@@ -1,16 +1,15 @@
 <?php 
-session_start();
-require_once '../db.php';
-
-// Check login and role
-if (!isset($_SESSION['userId']) || $_SESSION['userRole'] !== 'admin') {
-    header("Location: ../login.php");
-    exit();
-}
-
-$stmt = $pdo->prepare("SELECT username FROM users WHERE id = ?");
-$stmt->execute([$_SESSION['userId']]);
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
+  require_once '../db.php';
+  session_start();
+  
+  if (!isset($_SESSION['userId']) || $_SESSION['userRole'] !== 'admin') {
+      header("Location: ../login.php");
+      exit();
+  }
+  
+  $stmt = $pdo->prepare("SELECT username FROM users WHERE id = ?");
+  $stmt->execute([$_SESSION['userId']]);
+  $user = $stmt->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>

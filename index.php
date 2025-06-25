@@ -1,11 +1,11 @@
 <?php
-session_start();
-require_once 'db.php';
+  session_start();
+  require_once 'db.php';
 
-// Fetch max 3 featured products (latest 3 products)
-$stmt = $pdo->prepare("SELECT id, name, price, image_url FROM products ORDER BY id DESC LIMIT 3");
-$stmt->execute();
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+  $stmt = $pdo->prepare("SELECT id, name, price, image_url FROM products ORDER BY id DESC LIMIT 3");
+  $stmt->execute();
+  $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,14 +18,24 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
       font-family: 'Outfit', sans-serif;
       background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
     }
 
     .navbar {
       background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      z-index: 1000;
     }
 
     .hero {
@@ -35,7 +45,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
       align-items: center;
       justify-content: center;
       color: #fff;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+      flex-shrink: 0;
     }
 
     .hero h1 {
@@ -47,6 +58,10 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
       font-size: 1.3rem;
     }
 
+    .container.my-5 {
+      flex: 1 0 auto;
+    }
+
     .product-card {
       border: none;
       border-radius: 15px;
@@ -56,7 +71,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     .product-card:hover {
       transform: scale(1.03);
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
     }
 
     .product-card img.card-img-top {
@@ -70,7 +85,100 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
       color: #fff;
       padding: 2rem 0;
       text-align: center;
+      flex-shrink: 0;
     }
+
+    @media (max-width: 768px) {
+      .hero {
+        height: 50vh;
+      }
+    
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    
+      .hero p {
+        font-size: 1rem;
+      }
+    
+      .product-card img.card-img-top {
+        height: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        height: 40vh;
+      }
+    
+      .hero h1 {
+        font-size: 2rem;
+      }
+    
+      .hero p {
+        font-size: 0.9rem;
+      }
+    
+      .product-card img.card-img-top {
+        height: 200px;
+      }
+    }
+    .hero {
+      position: relative;
+      height: 80vh;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .hero .text-center {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: left center;
+      animation: slideBackground 15s infinite ease-in-out;
+      z-index: 1;
+      opacity: 0.85;
+    }
+
+    @keyframes slideBackground {
+      0% {
+        background-image: url('cl1.jpg');
+        background-position: left center;
+      }
+      25% {
+        background-position: center center;
+      }
+      33% {
+        background-image: url('cl2.jpg');
+        background-position: right center;
+      }
+      58% {
+        background-position: left center;
+      }
+      66% {
+        background-image: url('cl3.jpg');
+        background-position: center center;
+      }
+      91% {
+        background-position: right center;
+      }
+      100% {
+        background-image: url('cl1.jpg');
+        background-position: left center;
+      }
+    }
+
+
   </style>
 </head>
 

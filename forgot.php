@@ -26,27 +26,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $mail = new PHPMailer(true);
                 $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
+                $mail->Host = 'smtp.gmail.com'; 
                 $mail->SMTPAuth = true;
-                $mail->Username = 'badr.liongames@gmail.com';
+                $mail->Username = 'your_mail';
                 $mail->Password = 'rhtm aahv sfaf xnfn';
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
                 $mail->Port = 587;
-
-                $mail->setFrom('badr.liongames@gmail.com', 'Clothify Store');
-                $mail->addAddress($email, $user['username']);
-
-                $mail->Subject = 'Password Reset - Clothify';
-                $resetLink = "http://localhost/CLOTHIFY/reset.php?token=$token";
-
+                $mail->setFrom('your_mail', 'your_name');
+                $mail->addAddress($email, $name);
+                $mail->Subject = 'Title of the email';
                 $mail->isHTML(true);
-                $mail->Body = "
-                    <h2>Reset Your Password</h2>
-                    <p>Click the button below to reset your password:</p>
-                    <a href='$resetLink' style='padding:10px 20px;background:#000;color:#fff;text-decoration:none;border-radius:5px;'>Reset Password</a>
-                    <p>If you did not request this, please ignore this email.</p>
-                ";
-                $mail->AltBody = "Reset your password using the link: $resetLink";
+                $mail->Body = "Body of the email";
+                $mail->AltBody = "body of the email in plain text";
 
                 $mail->send();
                 $success = "A reset link has been sent to your email.";

@@ -1,44 +1,44 @@
 <?php
-session_start();
-require_once 'db.php';
-
-$error = '';
-$success = '';
-$showForm = false;
-
-$token = $_GET['token'] ?? '';
-
-if (empty($token)) {
-    $error = "Invalid or missing reset token.";
-} else {
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE reset_token = ? AND reset_expires > NOW()");
-    $stmt->execute([$token]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$user) {
-        $error = "Reset token is invalid or has expired.";
-    } else {
-        $showForm = true;
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $password = $_POST['password'] ?? '';
-            $confirm_password = $_POST['confirm_password'] ?? '';
-
-            if (empty($password) || empty($confirm_password)) {
-                $error = "Both password fields are required.";
-            } elseif ($password !== $confirm_password) {
-                $error = "Passwords do not match.";
-            } else {
-                $hashed = password_hash($password, PASSWORD_DEFAULT);
-                $stmt = $pdo->prepare("UPDATE users SET password = ?, reset_token = NULL, reset_expires = NULL WHERE id = ?");
-                $stmt->execute([$hashed, $user['id']]);
-
-                $success = "Your password has been reset successfully. You can now <a href='login.php'>login</a>.";
-                $showForm = false;
-            }
-        }
-    }
-}
+  session_start();
+  require_once 'db.php';
+  
+  $error = '';
+  $success = '';
+  $showForm = false;
+  
+  $token = $_GET['token'] ?? '';
+  
+  if (empty($token)) {
+      $error = "Invalid or missing reset token.";
+  } else {
+      $stmt = $pdo->prepare("SELECT * FROM users WHERE reset_token = ? AND reset_expires > NOW()");
+      $stmt->execute([$token]);
+      $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  
+      if (!$user) {
+          $error = "Reset token is invalid or has expired.";
+      } else {
+          $showForm = true;
+      
+          if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+              $password = $_POST['password'] ?? '';
+              $confirm_password = $_POST['confirm_password'] ?? '';
+          
+              if (empty($password) || empty($confirm_password)) {
+                  $error = "Both password fields are required.";
+              } elseif ($password !== $confirm_password) {
+                  $error = "Passwords do not match.";
+              } else {
+                  $hashed = password_hash($password, PASSWORD_DEFAULT);
+                  $stmt = $pdo->prepare("UPDATE users SET password = ?, reset_token = NULL, reset_expires = NULL WHERE id = ?");
+                  $stmt->execute([$hashed, $user['id']]);
+              
+                  $success = "Your password has been reset successfully. You can now <a href='login.php'>login</a>.";
+                  $showForm = false;
+              }
+          }
+      }
+  }
 ?>
 
 <!DOCTYPE html>

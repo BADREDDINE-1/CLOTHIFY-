@@ -1,10 +1,10 @@
 <?php
-session_start();
-require_once 'db.php';
+  session_start();
+  require_once 'db.php';
 
-$categories = $pdo->query("SELECT id, name FROM categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
+  $categories = $pdo->query("SELECT id, name FROM categories ORDER BY name")->fetchAll(PDO::FETCH_ASSOC);
 
-$products = $pdo->query("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC")->fetchAll(PDO::FETCH_ASSOC);
+  $products = $pdo->query("SELECT p.*, c.name as category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id ORDER BY p.id DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -18,14 +18,23 @@ $products = $pdo->query("SELECT p.*, c.name as category_name FROM products p LEF
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
       font-family: 'Outfit', sans-serif;
       background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
     }
 
     .navbar {
       background-color: #fff;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .container {
+      flex: 1;
     }
 
     .product-card {
@@ -127,7 +136,6 @@ $products = $pdo->query("SELECT p.*, c.name as category_name FROM products p LEF
       <div class="col-md-9">
         <div class="row g-4">
           <?php
-          // Apply filters if set
           $where = [];
           $params = [];
 

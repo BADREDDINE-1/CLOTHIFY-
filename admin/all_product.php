@@ -1,23 +1,26 @@
 <?php
-session_start();
-require_once '../db.php';
+  session_start();
+  require_once '../db.php';
 
-if (isset($_GET['delete_id'])) {
-    $deleteId = (int)$_GET['delete_id'];
-    $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
-    $stmt->execute([$deleteId]);
-    header('Location: all_product.php?deleted=1');
-    exit();
-}
+  if (!isset($_SESSION['userId'])) {
+      header("Location: ../login.php");
+      exit();
+  }
+  if (isset($_GET['delete_id'])) {
+      $deleteId = (int)$_GET['delete_id'];
+      $stmt = $pdo->prepare("DELETE FROM products WHERE id = ?");
+      $stmt->execute([$deleteId]);
+      header('Location: all_product.php?deleted=1');
+      exit();
+  }
 
-// Fetch all products with category name (LEFT JOIN)
-$stmt = $pdo->query("
-    SELECT p.id, p.name, p.price, p.image_url, p.stock_quantity, c.name AS category_name
-    FROM products p
-    LEFT JOIN categories c ON p.category_id = c.id
-    ORDER BY p.id DESC
-");
-$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $stmt = $pdo->query("
+      SELECT p.id, p.name, p.price, p.image_url, p.stock_quantity, c.name AS category_name
+      FROM products p
+      LEFT JOIN categories c ON p.category_id = c.id
+      ORDER BY p.id DESC
+  ");
+  $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +30,42 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin - All Products</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+    .footer {
+      background: #212529;
+      color: #fff;
+      padding: 2rem 0;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="../index.php">Clothify</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">Admin</a></li>
+          <li class="nav-item"><a class="nav-link" href="add_product.php">Add Product</a></li>
+          <li class="nav-item"><a class="nav-link" href="all_product.php">All Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="../logout.php">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
   <div class="container my-5">
     <h1 class="mb-4">All Products</h1>
 
@@ -76,6 +113,11 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <a href="admin.php" class="btn btn-secondary mt-3">Back to Dashboard</a>
   </div>
+  <footer class="footer">
+    <div class="container">
+      <p class="mb-0">&copy; 2025 Clothify. All rights reserved.</p>
+    </div>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

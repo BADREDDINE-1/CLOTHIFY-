@@ -1,34 +1,34 @@
 <?php
-session_start();
-require_once 'db.php';
+  session_start();
+  require_once 'db.php';
 
-if (!isset($_SESSION['userId'])) {
-    header('Location: login.php');
-    exit();
-}
+  if (!isset($_SESSION['userId'])) {
+      header('Location: login.php');
+      exit();
+  }
 
-$userId = $_SESSION['userId'];
+  $userId = $_SESSION['userId'];
 
-$stmt = $pdo->prepare("
-    SELECT products.id, products.name, products.price, products.image_url, cart_items.quantity
-    FROM cart_items
-    INNER JOIN products ON cart_items.product_id = products.id
-    WHERE cart_items.user_id = ?
-");
-$stmt->execute([$userId]);
-$cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
+  $stmt = $pdo->prepare("
+      SELECT products.id, products.name, products.price, products.image_url, cart_items.quantity
+      FROM cart_items
+      INNER JOIN products ON cart_items.product_id = products.id
+      WHERE cart_items.user_id = ?
+  ");
+  $stmt->execute([$userId]);
+  $cartItems = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if (empty($cartItems)) {
-    header('Location: cart.php');
-    exit();
-}
+  if (empty($cartItems)) {
+      header('Location: cart.php');
+      exit();
+  }
 
-$total = 0;
-foreach ($cartItems as &$item) {
-    $item['subtotal'] = $item['price'] * $item['quantity'];
-    $total += $item['subtotal'];
-}
-unset($item);
+  $total = 0;
+  foreach ($cartItems as &$item) {
+      $item['subtotal'] = $item['price'] * $item['quantity'];
+      $total += $item['subtotal'];
+  }
+  unset($item);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,23 +39,47 @@ unset($item);
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
       font-family: 'Outfit', sans-serif;
       background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
     }
+
+    .container.my-5 {
+      flex: 1 0 auto;
+    }
+
     .payment-form {
       background: #fff;
       padding: 2rem;
       border-radius: 15px;
       box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
     }
+
     .footer {
       background: #212529;
       color: #fff;
       padding: 2rem 0;
       text-align: center;
+      flex-shrink: 0;
       margin-top: 4rem;
     }
+
+    @media (max-width: 768px) {
+      .payment-form {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .payment-form {
+        padding: 1rem;
+      }
+    }
+
   </style>
 </head>
 <body>

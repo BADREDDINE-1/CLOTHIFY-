@@ -35,29 +35,18 @@
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com'; 
             $mail->SMTPAuth = true;
-            $mail->Username = 'badr.liongames@gmail.com';
+            $mail->Username = 'your_mail';
             $mail->Password = 'rhtm aahv sfaf xnfn';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
-            $mail->setFrom('badr.liongames@gmail.com', 'Clothify Store');
+            $mail->setFrom('your_mail', 'your_name');
             $mail->addAddress($email, $name);
-            $mail->Subject = 'Account Confirmation - Clothify';
+            $mail->Subject = 'Title of the email';
             $mail->isHTML(true);
-            $mail->Body = "
-              <div style='font-family: Arial, sans-serif; color: #333;'>
-                <h1 style='font-size: 48px; color: #222; margin-bottom: 0;'>CLOTHIFY</h1>
-                <h2 style='color: #555;'>Thank you for registering with us!</h2>
-                <p>Your account has been created successfully.</p>
-                <p><strong>Your confirmation code is:</strong></p>
-                <p style='font-size: 28px; font-weight: bold; background-color: #f0f0f0; padding: 10px; display: inline-block;'>$code</p>
-                <p>Please enter this code on the verification page to activate your account.</p>
-                <br>
-              <p>Best regards,<br>The Clothify Team</p>
-            </div>
-          ";
-          $mail->AltBody = "Thank you for registering with Clothify!\nYour confirmation code is: $code\nPlease enter this code on the verification page to activate your account.";
+            $mail->Body = "Body of the email";
+            $mail->AltBody = "body of the email in plain text";
       
-          if($mail->send()) {
+            if($mail->send()) {
               $sql = "SELECT id FROM users WHERE email = ?";
               $stmt = $pdo->prepare($sql);
               $stmt->execute([$email]);
@@ -92,14 +81,19 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
-    body {
+    html, body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
       font-family: 'Outfit', sans-serif;
       background-color: #f8f9fa;
     }
-    .navbar {
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+    body > .container {
+      flex: 1 0 auto; /* ykber w ydwi9 footer ta7t */
     }
+
     .register-form {
       max-width: 500px;
       margin: 4rem auto;
@@ -107,13 +101,19 @@
       padding: 2rem;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+      flex-shrink: 0;
     }
+
     .footer {
       background: #212529;
       color: #fff;
       padding: 2rem 0;
       text-align: center;
+      margin-top: auto; /* push footer ta7t */
+      flex-shrink: 0;
+      width: 100%;
     }
+
   </style>
 </head>
 <body>
