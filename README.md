@@ -33,4 +33,25 @@ CLOTHIFY is a modern and responsive **PHP & MySQL-based e-commerce website** bui
 
 ## 📂 Project Structure
 
-<pre markdown="1"> ```markdown CLOTHIFY/ ├── index.php # Homepage ├── register.php # Registration form ├── login.php # Login form ├── profile.php # User profile page ├── payment.php # Checkout/payment form ├── cart.php # Shopping cart ├── admin/ │ ├── dashboard.php # Admin dashboard │ ├── add_product.php # Add new product │ ├── edit_product.php # Edit product │ └── all_product.php # View/delete products ├── includes/ │ ├── header.php │ ├── footer.php │ └── db.php # DB connection (PDO) ├── css/ │ └── style.css # Shared styling ├── images/ # Product images ├── js/ # Optional JavaScript └── README.md # Project info ``` </pre>
+<pre markdown="1"> ```markdown CLOTHIFY/
+├── index.php               # Homepage
+├── register.php            # Registration form
+├── login.php               # Login form
+├── profile.php             # User profile page
+├── payment.php             # Checkout/payment form
+├── cart.php                # Shopping cart
+├── admin/
+│   ├── dashboard.php       # Admin dashboard
+│   ├── add_product.php     # Add new product
+│   ├── edit_product.php    # Edit product
+│   └── all_product.php     # View/delete products
+├── includes/
+│   ├── header.php
+│   ├── footer.php
+│   └── db.php              # DB connection (PDO)
+├── css/
+│   └── style.css           # Shared styling
+├── images/                 # Product images
+├── js/                     # Optional JavaScript
+└── README.md               # Project info
+ ``` </pre>
