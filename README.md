@@ -33,7 +33,7 @@ CLOTHIFY is a modern and responsive **PHP & MySQL-based e-commerce website** bui
 
 ## 📂 Project Structure
 
-<pre markdown="1"> ```markdown CLOTHIFY/
+<pre markdown="1"> CLOTHIFY/
 ├── index.php               # Homepage
 ├── register.php            # Registration form
 ├── login.php               # Login form
@@ -54,4 +54,4 @@ CLOTHIFY is a modern and responsive **PHP & MySQL-based e-commerce website** bui
 ├── images/                 # Product images
 ├── js/                     # Optional JavaScript
 └── README.md               # Project info
- ``` </pre>
+</pre>
